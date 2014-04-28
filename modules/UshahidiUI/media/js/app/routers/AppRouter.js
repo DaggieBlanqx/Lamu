@@ -30,9 +30,9 @@ define(['marionette'],
 				'tags' : 'tags',
 				'settings/site' : 'settings',
 				'settings/data-providers' : 'dataProviders',
+				'settings/data-providers/:provider' : 'dataProvidersConfig',
 				//'login' : 'login',
 				//'register' : 'register',
-				'sources' : 'dataSources',
 
 				// *path needs to be last
 				'*path' : 'index'

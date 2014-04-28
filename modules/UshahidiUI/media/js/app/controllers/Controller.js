@@ -108,6 +108,32 @@ define(['App', 'backbone', 'marionette',
 					}
 				]);
 
+				// Fake DataProviders Collection
+				App.Collections.DataProviders = new Backbone.Collection([
+					{
+						id: 'smssync',
+						name: 'SMSSync',
+						type: 'SMS',
+						enabled: true,
+						config: {
+							'from' : '12345',
+							'secret' : '1234'
+						},
+						form: {
+							'from' : {
+								label: 'Phone Number',
+								input: 'text',
+								description: ''
+							},
+							'secret' : {
+								label: 'Secret',
+								input: 'text',
+								description: ''
+							},
+						}
+					}
+				]);
+
 				// Grab tag collection, use client-side paging and fetch all tags from server at once
 				App.Collections.Tags = new TagCollection([], { mode: 'client' });
 				App.Collections.Tags.fetch();
@@ -394,15 +420,6 @@ define(['App', 'backbone', 'marionette',
 					}));
 				});
 			},
-			dataSources : function()
-			{
-				var that = this;
-				require(['views/DataSourcesView'], function(DataSourcesView)
-				{
-					App.vent.trigger('page:change', 'sources');
-					that.layout.mainRegion.show(new DataSourcesView());
-				});
-			},
 			/**
 			 * Shows a data provider listing
 			 */
@@ -413,32 +430,24 @@ define(['App', 'backbone', 'marionette',
 				{
 					App.vent.trigger('page:change', 'data-providers');
 					that.layout.mainRegion.show(new DataProviderList({
-						collection : new Backbone.Collection([
-							{
-								id: 'smssync',
-								name: 'SMSSync',
-								type: 'SMS',
-								enabled: true,
-								config: {
-									'from' : '12345',
-									'secret' : '1234'
-								},
-								form: {
-									'from' : {
-										label: 'Phone Number',
-										input: 'text',
-										description: ''
-									},
-									'secret' : {
-										label: 'Secret',
-										input: 'text',
-										description: ''
-									},
-								}
-							}
-						])
+						collection : App.Collections.DataProviders
+					}));
+				});
+			},
+			/**
+			 * Show a config form for an individual data provider
+			 * @param  String provider id
+			 */
+			dataProvidersConfig : function(id)
+			{
+				var that = this;
+				require(['views/settings/DataProviderConfig'], function(DataProviderConfigView)
+				{
+					App.vent.trigger('page:change', 'data-providers');
+					that.layout.mainRegion.show(new DataProviderConfigView({
+						model : App.Collections.DataProviders.get(id)
 					}));
 				});
 			}
-		});
+	});
 	});
