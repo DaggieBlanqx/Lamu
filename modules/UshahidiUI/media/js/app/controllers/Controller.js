@@ -393,6 +393,15 @@ define(['App', 'backbone', 'marionette',
 						collection : App.Collections.Messages
 					}));
 				});
+			},
+			dataSources : function()
+			{
+				var that = this;
+				require(['views/DataSourcesView'], function(DataSourcesView)
+				{
+					App.vent.trigger('page:change', 'sources');
+					that.layout.mainRegion.show(new DataSourcesView());
+				});
 			}
 		});
 	});

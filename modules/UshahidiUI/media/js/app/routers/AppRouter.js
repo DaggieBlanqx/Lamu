@@ -31,6 +31,9 @@ define(['marionette'],
 				'settings/site' : 'settings',
 				//'login' : 'login',
 				//'register' : 'register',
+				'sources' : 'dataSources',
+
+				// *path needs to be last
 				'*path' : 'index'
 			}
 		});
