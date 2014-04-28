@@ -393,6 +393,43 @@ define(['App', 'backbone', 'marionette',
 						collection : App.Collections.Messages
 					}));
 				});
+			},
+			/**
+			 * Shows a data provider listing
+			 */
+			dataProviders : function ()
+			{
+				var that = this;
+				require(['views/settings/DataProviderList'], function(DataProviderList)
+				{
+					App.vent.trigger('page:change', 'data-providers');
+					that.layout.mainRegion.show(new DataProviderList({
+						collection : new Backbone.Collection([
+							{
+								id: 'smssync',
+								name: 'SMSSync',
+								type: 'SMS',
+								enabled: true,
+								config: {
+									'from' : '12345',
+									'secret' : '1234'
+								},
+								form: {
+									'from' : {
+										label: 'Phone Number',
+										input: 'text',
+										description: ''
+									},
+									'secret' : {
+										label: 'Secret',
+										input: 'text',
+										description: ''
+									},
+								}
+							}
+						])
+					}));
+				});
 			}
 		});
 	});
