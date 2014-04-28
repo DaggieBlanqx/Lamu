@@ -25,8 +25,10 @@ define(['App', 'backbone', 'marionette',
 	'collections/FormCollection',
 	'collections/SetCollection',
 	'collections/RoleCollection',
+	'collections/DataProviderCollection',
 
-	'models/UserModel'
+	'models/UserModel',
+	'models/DataProviderModel'
 	],
 	function(App, Backbone, Marionette,
 		ModalController,
@@ -46,8 +48,10 @@ define(['App', 'backbone', 'marionette',
 		FormCollection,
 		SetCollection,
 		RoleCollection,
+		DataProviderCollection,
 
-		UserModel
+		UserModel,
+		DataProviderModel
 		)
 	{
 		return Backbone.Marionette.Controller.extend(
@@ -109,8 +113,9 @@ define(['App', 'backbone', 'marionette',
 				]);
 
 				// Fake DataProviders Collection
-				App.Collections.DataProviders = new Backbone.Collection([
-					{
+				App.Collections.DataProviders = new DataProviderCollection([
+					// use actual model object so call model.parse()
+					new DataProviderModel({
 						id: 'smssync',
 						name: 'SMSSync',
 						type: 'SMS',
@@ -131,7 +136,7 @@ define(['App', 'backbone', 'marionette',
 								description: ''
 							},
 						}
-					}
+					}, { parse : true })
 				]);
 
 				// Grab tag collection, use client-side paging and fetch all tags from server at once
