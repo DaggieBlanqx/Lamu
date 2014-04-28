@@ -32,6 +32,9 @@ define(['marionette'],
 				'settings/data-providers' : 'dataProviders',
 				//'login' : 'login',
 				//'register' : 'register',
+				'sources' : 'dataSources',
+
+				// *path needs to be last
 				'*path' : 'index'
 			}
 		});
